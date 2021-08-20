@@ -1,13 +1,4 @@
-# Waypoint Go Example
+# Waypoint Kubernetes Ingress
 
-| Title    | Description                                                                          |
-| -------- | ------------------------------------------------------------------------------------ |
-| Pack     | Cloud Native Buildpack                                                               |
-| Cloud    | Local                                                                                |
-| Language | Go                                                                                   |
-| Docs     | [Docker](https://www.waypointproject.io/plugins/docker)                              |
-| Tutorial | [HashiCorp Learn](https://learn.hashicorp.com/tutorials/waypoint/get-started-docker) |
-
-A barebones Go API, which can easily be deployed by Waypoint.
-
-This test project includes two apps defined in a single project.
+This example deploys two applications that uses an ingress resource to route
+traffic in between each app depending on the route requested.
