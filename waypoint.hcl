@@ -1,5 +1,11 @@
 project = "k8s-ingress"
 
+variable "namespace" {
+  default     = "projectcontour"
+  type        = string
+  description = "The namespace to deploy and release to in your Kubernetes cluster."
+}
+
 app "one" {
   labels = {
     "service" = "one",
@@ -20,6 +26,7 @@ app "one" {
   deploy {
     use "kubernetes" {
       probe_path = "/"
+      namespace  = var.namespace
     }
   }
 
@@ -27,6 +34,8 @@ app "one" {
     use "kubernetes" {
       load_balancer = true
       port          = 3000
+
+      namespace = var.namespace
     }
   }
 
@@ -53,6 +62,7 @@ app "two" {
   deploy {
     use "kubernetes" {
       probe_path = "/"
+      namespace  = var.namespace
     }
   }
 
@@ -60,6 +70,8 @@ app "two" {
     use "kubernetes" {
       load_balancer = true
       port          = 4000
+
+      namespace = var.namespace
     }
   }
 }
