@@ -12,6 +12,12 @@ app "one" {
     "env"     = "dev"
   }
 
+  config {
+    env = {
+      WP_NODE = "ONE"
+    }
+  }
+
   build {
     use "pack" {}
     registry {
@@ -32,10 +38,13 @@ app "one" {
 
   release {
     use "kubernetes" {
-      load_balancer = true
-      port          = 3000
-
       namespace = var.namespace
+      port      = 5678
+
+      ingress "http" {
+        path_type = "Prefix"
+        path      = "/one"
+      }
     }
   }
 
@@ -46,6 +55,12 @@ app "two" {
   labels = {
     "service" = "two",
     "env"     = "dev"
+  }
+
+  config {
+    env = {
+      WP_NODE = "TWO"
+    }
   }
 
   build {
@@ -68,10 +83,13 @@ app "two" {
 
   release {
     use "kubernetes" {
-      load_balancer = true
-      port          = 4000
-
       namespace = var.namespace
+      port      = 5678
+
+      ingress "http" {
+        path_type = "Prefix"
+        path      = "/two"
+      }
     }
   }
 }
