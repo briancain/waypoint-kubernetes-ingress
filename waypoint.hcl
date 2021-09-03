@@ -1,7 +1,7 @@
 project = "k8s-ingress"
 
 variable "namespace" {
-  default     = "projectcontour"
+  default     = "ingress-nginx"
   type        = string
   description = "The namespace to deploy and release to in your Kubernetes cluster."
 }
@@ -39,7 +39,7 @@ app "one" {
   release {
     use "kubernetes" {
       namespace = var.namespace
-      port      = 5678
+      port      = 3000
 
       ingress "http" {
         path_type = "Prefix"
@@ -84,7 +84,7 @@ app "two" {
   release {
     use "kubernetes" {
       namespace = var.namespace
-      port      = 5678
+      port      = 3000
 
       ingress "http" {
         path_type = "Prefix"
