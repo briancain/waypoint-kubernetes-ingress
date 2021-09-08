@@ -4,28 +4,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 )
 
 func main() {
-	// Each app sets this env var to differentiate between the two
-	appVar := os.Getenv("WP_NODE")
+	http.Handle("/app-one", http.StripPrefix("/app-one", http.FileServer(http.Dir("./app-one"))))
 
-	var fileServer http.Handler
-	if appVar == "ONE" {
-		fileServer = http.FileServer(http.Dir("./app-one"))
+	http.Handle("/app-two", http.StripPrefix("/app-two", http.FileServer(http.Dir("./app-two"))))
 
-		http.Handle("/app-one", http.StripPrefix("/app-one", fileServer))
-	} else if appVar == "TWO" {
-		fileServer = http.FileServer(http.Dir("./app-two"))
-
-		http.Handle("/app-two", http.StripPrefix("/app-two", fileServer))
-	} else {
-		// Show default if unset
-		fileServer = http.FileServer(http.Dir("./static"))
-
-		http.Handle("/", fileServer)
-	}
+	http.Handle("/", http.FileServer(http.Dir("./static")))
 
 	fmt.Printf("Starting server at: http://localhost:3000\n")
 	if err := http.ListenAndServe(":3000", nil); err != nil {

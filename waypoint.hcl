@@ -121,9 +121,9 @@ app "default" {
       namespace = var.namespace
 
       ingress "http" {
+        default   = true
         path_type = "Prefix"
         path      = "/"
-        default   = true
       }
     }
   }
