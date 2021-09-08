@@ -91,3 +91,40 @@ app "two" {
     }
   }
 }
+
+app "default" {
+  labels = {
+    "service" = "default",
+    "env"     = "dev"
+  }
+
+  build {
+    use "pack" {}
+    registry {
+      use "docker" {
+        image = "localhost:5000/default"
+        tag   = "1"
+        local = false
+      }
+    }
+  }
+
+  deploy {
+    use "kubernetes" {
+      probe_path = "/"
+      namespace  = var.namespace
+    }
+  }
+
+  release {
+    use "kubernetes" {
+      namespace = var.namespace
+
+      ingress "http" {
+        path_type = "Prefix"
+        path      = "/"
+        default   = true
+      }
+    }
+  }
+}
