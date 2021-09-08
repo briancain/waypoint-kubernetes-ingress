@@ -14,14 +14,18 @@ func main() {
 	var fileServer http.Handler
 	if appVar == "ONE" {
 		fileServer = http.FileServer(http.Dir("./app-one"))
+
+		http.Handle("/app-one", http.StripPrefix("/app-one", fileServer))
 	} else if appVar == "TWO" {
 		fileServer = http.FileServer(http.Dir("./app-two"))
+
+		http.Handle("/app-two", http.StripPrefix("/app-two", fileServer))
 	} else {
 		// Show default if unset
 		fileServer = http.FileServer(http.Dir("./static"))
-	}
 
-	http.Handle("/", fileServer)
+		http.Handle("/", fileServer)
+	}
 
 	fmt.Printf("Starting server at: http://localhost:3000\n")
 	if err := http.ListenAndServe(":3000", nil); err != nil {

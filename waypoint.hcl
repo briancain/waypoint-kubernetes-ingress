@@ -1,4 +1,4 @@
-project = "k8s-ingress"
+project = "example-go-multiapp-k8s-ingress"
 
 variable "namespace" {
   default     = "ingress-nginx"
@@ -39,11 +39,10 @@ app "one" {
   release {
     use "kubernetes" {
       namespace = var.namespace
-      port      = 3000
 
       ingress "http" {
         path_type = "Prefix"
-        path      = "/one"
+        path      = "/app-one"
       }
     }
   }
@@ -84,11 +83,10 @@ app "two" {
   release {
     use "kubernetes" {
       namespace = var.namespace
-      port      = 3000
 
       ingress "http" {
         path_type = "Prefix"
-        path      = "/two"
+        path      = "/app-two"
       }
     }
   }
